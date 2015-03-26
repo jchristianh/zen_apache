@@ -1,0 +1,108 @@
+<%= @conf_header %>
+### <%= @site_name %> - virtual host file ###
+<%= @conf_header %>
+
+
+<VirtualHost <%= @site_ip %>:<%= @site_port %>>
+  ServerName <%= @site_name %>
+  <% if @site_alias %>
+  ServerAlias <%= @site_alias %>
+  <% end %>
+  ServerAdmin <%= @site_admin %>
+  HostnameLookups <%= @host_lookups %>
+  DocumentRoot <%= @doc_root %>
+  ErrorLog <%= @errorlog %>
+
+<% if @dontlog %>
+  <% if @ip_whitelist %>
+  CustomLog <%= @customlog %> <%= @clog_opts %>
+  SetEnvIf Remote_Addr "(<%= @ip_whitelist.join("|") + "|::1" %>)" dontlog
+  <% else %>
+  CustomLog <%= @customlog %>
+  <% end %>
+<% else %>
+  CustomLog <%= @customlog %>
+<% end %>
+
+<% if @site['ssl'] && @site['ssl']['SSLEngine'] == "On" %>
+  SSLEngine <%= @site['ssl']['SSLEngine'] %>
+  <% if @proxyreqs %>
+  SSLProxyEngine on
+  <% end %>
+  SSLCertificateFile <%= @site['ssl']['SSLCertificateFile'] %>
+  SSLCertificateKeyFile <%= @site['ssl']['SSLCertificateKeyFile'] %>
+  <% if @site['ssl']['SSLCertificateChainFile'] %>
+  SSLCertificateChainFile <%= @site['ssl']['SSLCertificateChainFile'] %>
+  <% end %>
+<% end %>
+
+<% if @proxyreqs %>
+  <% if @proxy['preserve_hosts'] %>
+  ProxyPreserveHost On
+  <% else %>
+  ProxyPreserveHost Off
+  <% end %>
+
+  ProxyPass        <%= @proxy['path'] %> <%= @proxy['dest'] %>
+  ProxyPassReverse <%= @proxy['path'] %> <%= @proxy['dest'] %>
+<% end %>
+
+<% if @site['scriptalias'] %>
+  ScriptAlias /cgi-bin <%= @doc_root %>/cgi-bin
+<% end %>
+
+<% if @site['server_status'] %>
+  <Location /server-status>
+    SetHandler server-status
+  </Location>
+<% end %>
+
+<% if @site['perl'] %>
+  <Files ~ "\.pl$">
+  <% @site['perl'].each do |k,v| %>
+    <%= k %> <%= v %>
+  <% end %>
+  </Files>
+<% end %>
+
+<% if @site['modsec'] %>
+<IfModule mod_security2.c>
+  SecAction<%= @modsec_opts['SecAction'] %>
+  <Location <%= @modsec_opts['Location'] %>>
+<% @modsec_opts['SecRule'].each do |rule| %>
+  SecRule <%= rule %>
+<% end %>
+  </Location>
+</IfModule>
+<% end %>
+
+<% if @site['directories'] %>
+<% @site['directories'].each do |k,v| %>
+  <Directory "<%= k %>">
+  <% if v.class == Hash %>
+    <% v.each do |kk,vv| %>
+      <% if vv.class == Array %>
+        <% vv.each_with_index do |val,idx| %>
+    <%= kk %> <%= val %>
+        <% end %>
+      <% elsif v.class == Hash %>
+    <%= kk %> <%= vv %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= k %> <%= v %>
+  <% end %>
+  </Directory>
+
+<% end %>
+<% end %>
+<% if @site['blocked_files'] %>
+  <% @site['blocked_files'].each do |k,v| %>
+  <Files <%= k %>>
+    Require all denied
+    Require ip <%= @ip_whitelist.join(" ") %>
+  </Files>
+
+  <% end %>
+<% end %>
+</VirtualHost>
