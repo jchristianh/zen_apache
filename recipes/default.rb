@@ -18,37 +18,38 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 
-httpd_root      = node['zen_apache']['httpd']['root']
-httpd_conf_root = node['zen_apache']['httpd']['conf_root']
-httpd_site_root = node['zen_apache']['httpd']['sites']
-
-
 # CREATE conf/ and conf/vhosts to hold configs
-directory httpd_root do
+directory node['zen_apache']['httpd']['root'] do
   action :create
   owner  node['zen_apache']['alt_files_owner']
   group  node['zen_apache']['alt_files_group']
   mode   node['zen_apache']['alt_dirs_mode']
 end
 
-directory httpd_conf_root do
+directory node['zen_apache']['httpd']['conf_root'] do
   action :create
   owner  node['zen_apache']['alt_files_owner']
   group  node['zen_apache']['alt_files_group']
   mode   node['zen_apache']['alt_dirs_mode']
 end
 
-directory httpd_site_root do
+directory node['zen_apache']['httpd']['sites'] do
   action :create
   owner  node['zen_apache']['alt_files_owner']
   group  node['zen_apache']['alt_files_group']
   mode   node['zen_apache']['alt_dirs_mode']
 end
 
+directory node['zen_apache']['php']['sess_path'] do
+  action :create
+end
 
-# SYMLINK /www/sites to /virtual
-link "/virtual" do
-  to httpd_site_root
+
+# Symlink site root if desired
+if node['zen_apache']['do_sites_symlink'] == true
+  link node['zen_apache']['sites_symlink_target'] do
+    to httpd_site_root
+  end
 end
 
 
