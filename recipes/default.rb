@@ -2,7 +2,58 @@
 # Cookbook Name:: zen_apache
 # Recipe:: default
 #
-# Copyright 2015, Copyright (C) 2015 Chris Hammer
+# Copyright (C) 2015 Chris Hammer <chris@thezengarden.net>
 #
-# All rights reserved - Do Not Redistribute
-#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, see <http://www.gnu.org/licenses/gpl-2.0.txt>.
+
+
+httpd_root      = node['zen_apache']['httpd']['root']
+httpd_conf_root = node['zen_apache']['httpd']['conf_root']
+httpd_site_root = node['zen_apache']['httpd']['sites']
+
+
+# CREATE conf/ and conf/vhosts to hold configs
+directory httpd_root do
+  action :create
+  owner  node['zen_apache']['alt_files_owner']
+  group  node['zen_apache']['alt_files_group']
+  mode   node['zen_apache']['alt_dirs_mode']
+end
+
+directory httpd_conf_root do
+  action :create
+  owner  node['zen_apache']['alt_files_owner']
+  group  node['zen_apache']['alt_files_group']
+  mode   node['zen_apache']['alt_dirs_mode']
+end
+
+directory httpd_site_root do
+  action :create
+  owner  node['zen_apache']['alt_files_owner']
+  group  node['zen_apache']['alt_files_group']
+  mode   node['zen_apache']['alt_dirs_mode']
+end
+
+
+# SYMLINK /www/sites to /virtual
+link "/virtual" do
+  to httpd_site_root
+end
+
+
+# WRITE CONFIGS AND START SERVICES
+include_recipe "zen_apache::httpd_conf"
+include_recipe "zen_apache::virtual_hosts"
+include_recipe "zen_apache::php_ini"
+include_recipe "zen_apache::services"
