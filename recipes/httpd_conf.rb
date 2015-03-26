@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: apache_conf
+# Cookbook Name:: zen_apache
 # Recipe:: httpd_conf
 #
 # Copyright (C) 2015 Chris Hammer <chris@thezengarden.net>
@@ -18,9 +18,9 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 
-httpd_conf_root    = node['apache_conf']['httpd']['conf_root']
-httpd_conf         = node['apache_conf']['httpd']['httpd_conf']
-default_httpd_conf = node['apache_conf']['httpd']['default_conf']
+httpd_conf_root    = node['zen_apache']['httpd']['conf_root']
+httpd_conf         = node['zen_apache']['httpd']['httpd_conf']
+default_httpd_conf = node['zen_apache']['httpd']['default_conf']
 
 
 execute "Backing up default httpd.conf" do
@@ -31,13 +31,13 @@ end
 
 template "#{httpd_conf_root}/#{httpd_conf}" do
   source 'httpd-2.4.conf.erb'
-  owner  node['apache_conf']['alt_files_owner']
-  group  node['apache_conf']['alt_files_group']
-  mode   node['apache_conf']['alt_files_mode']
+  owner  node['zen_apache']['alt_files_owner']
+  group  node['zen_apache']['alt_files_group']
+  mode   node['zen_apache']['alt_files_mode']
 
   variables ({
-    :http_listen => node['apache_conf']['httpd']['listen_port'],
-    :conf_path   => node['apache_conf']['httpd']['vhosts'],
+    :http_listen => node['zen_apache']['httpd']['listen_port'],
+    :conf_path   => node['zen_apache']['httpd']['vhosts'],
     :sitelist    => node['sitelist']
   })
 
@@ -64,9 +64,9 @@ end
 if ssl_certs.count > 0
   ssl_certs.each do |cert|
     file "#{httpd_conf_root}/ssl/#{cert['id']}" do
-      owner  node['apache_conf']['alt_files_owner']
-      group  node['apache_conf']['alt_files_group']
-      mode   node['apache_conf']['alt_files_mode']
+      owner  node['zen_apache']['alt_files_owner']
+      group  node['zen_apache']['alt_files_group']
+      mode   node['zen_apache']['alt_files_mode']
 
       # SSL CERT CONTENT
       if cert['data'].class == String

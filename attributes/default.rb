@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: apache_conf
+# Cookbook Name:: zen_apache
 # Attributes:: default
 #
 # Copyright (C) 2015 Chris Hammer <chris@thezengarden.net>
@@ -19,32 +19,32 @@
 
 
 # GENERAL
-default['apache_conf']['alt_files_owner'] = "chris"
-default['apache_conf']['alt_files_group'] = "chris"
-default['apache_conf']['alt_files_mode']  = "0644"
-default['apache_conf']['alt_dirs_mode']   = "0755"
+default['zen_apache']['alt_files_owner'] = "chris"
+default['zen_apache']['alt_files_group'] = "chris"
+default['zen_apache']['alt_files_mode']  = "0644"
+default['zen_apache']['alt_dirs_mode']   = "0755"
 
 
 # HTTPD:
-default['apache_conf']['httpd']['listen_port']    = "80"
-default['apache_conf']['httpd']['root']           = "/www"
-default['apache_conf']['httpd']['conf_root']      = node['apache_conf']['httpd']['root'] + "/conf"
-default['apache_conf']['httpd']['vhosts']         = node['apache_conf']['httpd']['conf_root'] + "/vhosts"
-default['apache_conf']['httpd']['sites']          = node['apache_conf']['httpd']['root'] + "/sites"
-default['apache_conf']['httpd']['httpd_conf']     = "httpd.conf"
-default['apache_conf']['httpd']['default_conf']   = "/etc/httpd/conf/httpd.conf"
-default['apache_conf']['httpd']['vhost_data_bag'] = "virtual_hosts"
+default['zen_apache']['httpd']['listen_port']    = "80"
+default['zen_apache']['httpd']['root']           = "/www"
+default['zen_apache']['httpd']['conf_root']      = node['zen_apache']['httpd']['root'] + "/conf"
+default['zen_apache']['httpd']['vhosts']         = node['zen_apache']['httpd']['conf_root'] + "/vhosts"
+default['zen_apache']['httpd']['sites']          = node['zen_apache']['httpd']['root'] + "/sites"
+default['zen_apache']['httpd']['httpd_conf']     = "httpd.conf"
+default['zen_apache']['httpd']['default_conf']   = "/etc/httpd/conf/httpd.conf"
+default['zen_apache']['httpd']['vhost_data_bag'] = "virtual_hosts"
 
 
 # PHP:
-default['apache_conf']['php']['php_ini']     = node['apache_conf']['httpd']['conf_root'] + "/php.ini"
-default['apache_conf']['php']['default_ini'] = "/etc/php.ini"
+default['zen_apache']['php']['php_ini']     = node['zen_apache']['httpd']['conf_root'] + "/php.ini"
+default['zen_apache']['php']['default_ini'] = "/etc/php.ini"
 
-default['apache_conf']['php']['mem_limit']         = 128
-default['apache_conf']['php']['post_max']          = 256
-default['apache_conf']['php']['upld_max']          = 200
-default['apache_conf']['php']['timezone']          = "America/New_York"
-default['apache_conf']['php']['mysql_persistance'] = "On"
-default['apache_conf']['php']['sess_handler']      = "files"
-default['apache_conf']['php']['sess_path']         = node['apache_conf']['httpd']['root'] + "/cache"
-default['apache_conf']['php']['geoip_dir']         = "/www/sites/resources.thezengarden.net/htdocs/analytics/misc"
+default['zen_apache']['php']['mem_limit']         = 128
+default['zen_apache']['php']['post_max']          = 256
+default['zen_apache']['php']['upld_max']          = 200
+default['zen_apache']['php']['timezone']          = "America/New_York"
+default['zen_apache']['php']['mysql_persistance'] = "On"
+default['zen_apache']['php']['sess_handler']      = "files"
+default['zen_apache']['php']['sess_path']         = node['zen_apache']['httpd']['root'] + "/cache"
+default['zen_apache']['php']['geoip_dir']         = "/www/sites/resources.thezengarden.net/htdocs/analytics/misc"

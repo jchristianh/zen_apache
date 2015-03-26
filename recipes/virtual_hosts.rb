@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: apache_conf
+# Cookbook Name:: zen_apache
 # Recipe:: virtual_hosts
 #
 # Copyright (C) 2015 Chris Hammer <chris@thezengarden.net>
@@ -19,17 +19,17 @@
 
 
 # Create Virtual Host config directory if not present:
-directory node['apache_conf']['httpd']['vhosts'] do
+directory node['zen_apache']['httpd']['vhosts'] do
   action :create
-  owner  node['apache_conf']['alt_files_owner']
-  group  node['apache_conf']['alt_files_group']
-  mode   node['apache_conf']['alt_dirs_mode']
+  owner  node['zen_apache']['alt_files_owner']
+  group  node['zen_apache']['alt_files_group']
+  mode   node['zen_apache']['alt_dirs_mode']
   recursive true
 end
 
 
 node['sitelist'].each do |sl|
-  vh     = data_bag_item(node['apache_conf']['httpd']['vhost_data_bag'], sl)
+  vh     = data_bag_item(node['zen_apache']['httpd']['vhost_data_bag'], sl)
   mysite = vh['id'].sub(/_ssl$|_proxy$/, "")
 
   log "Creating folders and config for #{mysite}"
@@ -47,11 +47,11 @@ node['sitelist'].each do |sl|
     end
   end
 
-  template "#{node['apache_conf']['httpd']['vhosts']}/#{vh['id']}" do
+  template "#{node['zen_apache']['httpd']['vhosts']}/#{vh['id']}" do
     source "virtual_host.erb"
-    owner  node['apache_conf']['alt_files_owner']
-    group  node['apache_conf']['alt_files_group']
-    mode   node['apache_conf']['alt_files_mode']
+    owner  node['zen_apache']['alt_files_owner']
+    group  node['zen_apache']['alt_files_group']
+    mode   node['zen_apache']['alt_files_mode']
 
     # Generate a pretty header for each VHost file:
     conf_hd_len = mysite.length + " - virtual host file".length + 8

@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: apache_server
+# Cookbook Name:: zen_apache
 # Recipe:: services
 #
 # Copyright (C) 2015 Chris Hammer <chris@thezengarden.net>
