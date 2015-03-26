@@ -46,10 +46,9 @@ end
 
 
 # Symlink site root if desired
-if node['zen_apache']['do_sites_symlink'] == true
-  link node['zen_apache']['sites_symlink_target'] do
-    to httpd_site_root
-  end
+link node['zen_apache']['sites_symlink_target'] do
+  to node['zen_apache']['httpd']['sites']
+  only_if { node['zen_apache']['do_sites_symlink'] }
 end
 
 
