@@ -1261,6 +1261,8 @@ soap.wsdl_cache_ttl=86400
 
 ; GEOIP SETUP
 ; extension=geoip.so
+<% if @geoip_directory %>
 geoip.custom_directory=<%= @geoip_directory %>
+<% end %>
 
 ; End:
