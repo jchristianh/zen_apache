@@ -24,6 +24,9 @@ default['zen_apache']['alt_files_group'] = "chris"
 default['zen_apache']['alt_files_mode']  = "0644"
 default['zen_apache']['alt_dirs_mode']   = "0755"
 
+default['zen_apache']['do_sites_symlink']     = true
+default['zen_apache']['sites_symlink_target'] = "/virtual"
+
 
 # HTTPD:
 default['zen_apache']['httpd']['listen_port']    = "80"
@@ -46,5 +49,5 @@ default['zen_apache']['php']['upld_max']          = 200
 default['zen_apache']['php']['timezone']          = "America/New_York"
 default['zen_apache']['php']['mysql_persistance'] = "On"
 default['zen_apache']['php']['sess_handler']      = "files"
-default['zen_apache']['php']['sess_path']         = node['zen_apache']['httpd']['root'] + "/cache"
+default['zen_apache']['php']['sess_path']         = "/tmp"
 default['zen_apache']['php']['geoip_dir']         = "/www/sites/resources.thezengarden.net/htdocs/analytics/misc"
