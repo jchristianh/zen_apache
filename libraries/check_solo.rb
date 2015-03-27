@@ -20,8 +20,8 @@
 
 class Chef::Recipe::CheckSolo
   def self.check_solo?
-    if Chef::Config['solo']
+    #if Chef::Config['solo']
       Chef::Application.fatal!("This recipe requires backing by a Chef server.")
-    end
+    #end
   end
 end
