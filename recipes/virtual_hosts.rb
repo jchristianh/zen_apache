@@ -32,7 +32,7 @@ node['sitelist'].each do |sl|
   vh     = data_bag_item(node['zen_apache']['httpd']['vhost_data_bag'], sl)
   mysite = vh['id'].sub(/_ssl$|_proxy$/, "")
 
-  log "Creating folders and config for #{mysite}"
+  log "\n\n\Creating folders and config for #{mysite}"
 
   site_root = "#{vh['site_root']}/#{mysite}"
   doc_root  = "#{site_root}/#{vh['doc_root']}"
@@ -51,7 +51,7 @@ node['sitelist'].each do |sl|
     source "virtual_host.erb"
     owner  node['zen_apache']['alt_files_owner'] if node['zen_apache']['alt_files_owner']
     group  node['zen_apache']['alt_files_group'] if node['zen_apache']['alt_files_group']
-    mode   node['zen_apache']['alt_files_mode']   if node['zen_apache']['alt_files_mode']
+    mode   node['zen_apache']['alt_files_mode']  if node['zen_apache']['alt_files_mode']
 
     # Generate a pretty header for each VHost file:
     conf_hd_len = mysite.length + " - virtual host file".length + 8
