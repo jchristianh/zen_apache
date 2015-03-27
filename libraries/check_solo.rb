@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: zen_apache
-# Recipe:: services
+# Library:: check_solo
 #
 # Copyright (C) 2015 Chris Hammer <chris@thezengarden.net>
 #
@@ -18,6 +18,10 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 
-service "httpd" do
-  action :enable
+class Chef::Recipe::CheckSolo
+  def self.check_solo?
+    if Chef::Config['solo']
+      Chef::Application.fatal!("This recipe requires backing by a Chef server.")
+    end
+  end
 end

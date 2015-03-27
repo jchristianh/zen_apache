@@ -25,11 +25,18 @@ default_php_ini = node['zen_apache']['php']['default_ini']
 
 template "#{conf_root}/php.ini" do
   source 'php.ini.erb'
-  owner  node['zen_apache']['alt_files_owner']
-  group  node['zen_apache']['alt_files_group']
-  mode   node['zen_apache']['alt_files_mode']
+  owner  node['zen_apache']['alt_files_owner'] if node['zen_apache']['alt_files_owner']
+  group  node['zen_apache']['alt_files_group'] if node['zen_apache']['alt_files_group']
+  mode   node['zen_apache']['alt_files_mode']   if node['zen_apache']['alt_files_mode']
 
   variables ({
+    :max_exec_time         => node['zen_apache']['php']['max_exec_time'],
+    :max_input_time        => node['zen_apache']['php']['max_input_time'],
+    :display_errors        => node['zen_apache']['php']['display_errors'],
+    :allow_fopen           => node['zen_apache']['php']['allow_fopen'],
+    :allow_url_inc         => node['zen_apache']['php']['allow_url_inc'],
+    :sess_use_cookies      => node['zen_apache']['php']['sess_use_cookies'],
+    :sess_cookie_life      => node['zen_apache']['php']['sess_cookie_life'],
     :php_memory_limit      => node['zen_apache']['php']['mem_limit'],
     :php_post_max_size     => node['zen_apache']['php']['post_max'],
     :php_upload_max        => node['zen_apache']['php']['upld_max'],
