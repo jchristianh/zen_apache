@@ -18,10 +18,6 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 
-# Include our Pkg::Install module:
-::Chef::Recipe.send(:include, ZEN::Package)
-
-
 pkg_list = [
     'httpd', 'php-pecl-igbinary', 'php-pecl-memcache', 'php-pecl-imagick',
     'php-cli', 'php-gd', 'php-process', 'php-pear', 'php-pecl-memcached',
@@ -34,4 +30,8 @@ pkg_list = [
 
 # Once all base packages have been updated, lets install
 # a base set of packages that should be on every node:
-install_pkgs (pkg_list)
+pkg_list.each do |pkg|
+  package pkg do
+    action :install
+  end
+end
