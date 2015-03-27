@@ -51,7 +51,7 @@ node['sitelist'].each do |sl|
     source "virtual_host.erb"
     owner  node['zen_apache']['alt_files_owner'] if node['zen_apache']['alt_files_owner']
     group  node['zen_apache']['alt_files_group'] if node['zen_apache']['alt_files_group']
-    mode   node['zen_apache']['alt_dirs_mode']   if node['zen_apache']['alt_dirs_mode']
+    mode   node['zen_apache']['alt_files_mode']   if node['zen_apache']['alt_files_mode']
 
     # Generate a pretty header for each VHost file:
     conf_hd_len = mysite.length + " - virtual host file".length + 8
