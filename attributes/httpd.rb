@@ -22,7 +22,7 @@
 default['zen_apache']['httpd']['listen_port']    = "80"
 default['zen_apache']['httpd']['root']           = "/www"
 default['zen_apache']['httpd']['conf_root']      = node['zen_apache']['httpd']['root'] + "/conf"
-default['zen_apache']['httpd']['cert_path']      = node['zen_apache']['httpd']['root'] + "/ssl"
+default['zen_apache']['httpd']['cert_path']      = node['zen_apache']['httpd']['conf_root'] + "/ssl"
 default['zen_apache']['httpd']['vhosts']         = node['zen_apache']['httpd']['conf_root'] + "/vhosts"
 default['zen_apache']['httpd']['sites']          = node['zen_apache']['httpd']['root'] + "/sites"
 default['zen_apache']['httpd']['httpd_conf']     = "httpd.conf"
