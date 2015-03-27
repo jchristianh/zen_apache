@@ -38,6 +38,13 @@ directory node['zen_apache']['httpd']['conf_root'] do
   mode   node['zen_apache']['alt_dirs_mode']
 end
 
+directory node['zen_apache']['httpd']['cert_path'] do
+  action :create
+  owner  node['zen_apache']['alt_files_owner']
+  group  node['zen_apache']['alt_files_group']
+  mode   node['zen_apache']['alt_dirs_mode']
+end
+
 directory node['zen_apache']['httpd']['sites'] do
   action :create
   owner  node['zen_apache']['alt_files_owner']
