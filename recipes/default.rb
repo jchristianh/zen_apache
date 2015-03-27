@@ -18,6 +18,11 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 
+# If we're not running off a Chef Server,
+# we will fail the run:
+CheckSolo.check_solo?
+
+
 # CREATE conf/ and conf/vhosts to hold configs
 directory node['zen_apache']['httpd']['root'] do
   action :create

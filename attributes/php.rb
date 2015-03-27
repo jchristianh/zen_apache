@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: zen_apache
-# Recipe:: services
+# Attributes:: php
 #
 # Copyright (C) 2015 Chris Hammer <chris@thezengarden.net>
 #
@@ -18,6 +18,15 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 
-service "httpd" do
-  action [:enable, :start]
-end
+# PHP OPTIONS
+default['zen_apache']['php']['php_ini']     = node['zen_apache']['httpd']['conf_root'] + "/php.ini"
+default['zen_apache']['php']['default_ini'] = "/etc/php.ini"
+
+default['zen_apache']['php']['mem_limit']         = 128
+default['zen_apache']['php']['post_max']          = 256
+default['zen_apache']['php']['upld_max']          = 200
+default['zen_apache']['php']['timezone']          = "America/New_York"
+default['zen_apache']['php']['mysql_persistance'] = "On"
+default['zen_apache']['php']['sess_handler']      = "files"
+default['zen_apache']['php']['sess_path']         = "/tmp"
+default['zen_apache']['php']['geoip_dir']         = "/www/sites/resources.thezengarden.net/htdocs/analytics/misc"

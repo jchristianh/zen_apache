@@ -52,14 +52,7 @@ link default_httpd_conf do
 end
 
 
-if Chef::Config['solo']
-  log "This recipe requires backing by a Chef server." do
-    level :fatal
-  end
-else
-  # Pull in users from data bag:
-  ssl_certs = search(:ssl_certs, 'id:*')
-end
+ssl_certs = search(:ssl_certs, 'id:*') # ignore FC003
 
 if ssl_certs.count > 0
   ssl_certs.each do |cert|

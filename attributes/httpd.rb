@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: zen_apache
-# Recipe:: services
+# Attributes:: httpd
 #
 # Copyright (C) 2015 Chris Hammer <chris@thezengarden.net>
 #
@@ -18,6 +18,12 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 
-service "httpd" do
-  action [:enable, :start]
-end
+# HTTPD OPTIONS
+default['zen_apache']['httpd']['listen_port']    = "80"
+default['zen_apache']['httpd']['root']           = "/www"
+default['zen_apache']['httpd']['conf_root']      = node['zen_apache']['httpd']['root'] + "/conf"
+default['zen_apache']['httpd']['vhosts']         = node['zen_apache']['httpd']['conf_root'] + "/vhosts"
+default['zen_apache']['httpd']['sites']          = node['zen_apache']['httpd']['root'] + "/sites"
+default['zen_apache']['httpd']['httpd_conf']     = "httpd.conf"
+default['zen_apache']['httpd']['default_conf']   = "/etc/httpd/conf/httpd.conf"
+default['zen_apache']['httpd']['vhost_data_bag'] = "virtual_hosts"
