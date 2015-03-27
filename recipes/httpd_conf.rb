@@ -36,9 +36,13 @@ template "#{httpd_conf_root}/#{httpd_conf}" do
   mode   node['zen_apache']['alt_files_mode']
 
   variables ({
-    :http_listen => node['zen_apache']['httpd']['listen_port'],
-    :conf_path   => node['zen_apache']['httpd']['vhosts'],
-    :sitelist    => node['sitelist']
+    :server_root =>  node['zen_apache']['httpd']['server_root'],
+    :user        =>  node['zen_apache']['httpd']['user'],
+    :group       =>  node['zen_apache']['httpd']['group'],
+    :server_admin => node['zen_apache']['httpd']['server_admin'],
+    :http_listen =>  node['zen_apache']['httpd']['listen_port'],
+    :conf_path   =>  node['zen_apache']['httpd']['vhosts'],
+    :sitelist    =>  node['sitelist']
   })
 
   notifies :restart, "service[httpd]", :delayed

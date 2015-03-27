@@ -19,6 +19,10 @@
 
 
 # HTTPD OPTIONS
+default['zen_apache']['httpd']['server_root']    = "/etc/httpd"
+default['zen_apache']['httpd']['user']           = "apache"
+default['zen_apache']['httpd']['group']          = "apache"
+default['zen_apache']['httpd']['server_admin']   = "chris@thezengarden.net"
 default['zen_apache']['httpd']['listen_port']    = "80"
 default['zen_apache']['httpd']['root']           = "/www"
 default['zen_apache']['httpd']['conf_root']      = node['zen_apache']['httpd']['root'] + "/conf"
