@@ -25,9 +25,9 @@ default_php_ini = node['zen_apache']['php']['default_ini']
 
 template "#{conf_root}/php.ini" do
   source 'php.ini.erb'
-  owner  node['zen_apache']['alt_files_owner']
-  group  node['zen_apache']['alt_files_group']
-  mode   node['zen_apache']['alt_files_mode']
+  owner  node['zen_apache']['alt_files_owner'] if node['zen_apache']['alt_files_owner']
+  group  node['zen_apache']['alt_files_group'] if node['zen_apache']['alt_files_group']
+  mode   node['zen_apache']['alt_dirs_mode']   if node['zen_apache']['alt_dirs_mode']
 
   variables ({
     :max_exec_time         => node['zen_apache']['php']['max_exec_time'],

@@ -31,9 +31,9 @@ end
 
 template "#{httpd_conf_root}/#{httpd_conf}" do
   source 'httpd-2.4.conf.erb'
-  owner  node['zen_apache']['alt_files_owner']
-  group  node['zen_apache']['alt_files_group']
-  mode   node['zen_apache']['alt_files_mode']
+  owner  node['zen_apache']['alt_files_owner'] if node['zen_apache']['alt_files_owner']
+  group  node['zen_apache']['alt_files_group'] if node['zen_apache']['alt_files_group']
+  mode   node['zen_apache']['alt_dirs_mode']   if node['zen_apache']['alt_dirs_mode']
 
   variables ({
     :server_root =>  node['zen_apache']['httpd']['server_root'],
@@ -61,9 +61,9 @@ ssl_certs = search(:ssl_certs, 'id:*') # ignore FC003
 if ssl_certs.count > 0
   ssl_certs.each do |cert|
     file "#{httpd_conf_root}/ssl/#{cert['id']}" do
-      owner  node['zen_apache']['alt_files_owner']
-      group  node['zen_apache']['alt_files_group']
-      mode   node['zen_apache']['alt_files_mode']
+    owner  node['zen_apache']['alt_files_owner'] if node['zen_apache']['alt_files_owner']
+    group  node['zen_apache']['alt_files_group'] if node['zen_apache']['alt_files_group']
+    mode   node['zen_apache']['alt_dirs_mode']   if node['zen_apache']['alt_dirs_mode']
 
       # SSL CERT CONTENT
       if cert['data'].class == String
