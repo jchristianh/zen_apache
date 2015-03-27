@@ -32,7 +32,7 @@ node['sitelist'].each do |sl|
   vh     = data_bag_item(node['zen_apache']['httpd']['vhost_data_bag'], sl)
   mysite = vh['id'].sub(/_ssl$|_proxy$/, "")
 
-  log "\n\n\Creating folders and config for #{mysite}"
+  log "\n\nCreating folders and config for #{mysite}"
 
   site_root = "#{vh['site_root']}/#{mysite}"
   doc_root  = "#{site_root}/#{vh['doc_root']}"
