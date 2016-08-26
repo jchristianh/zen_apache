@@ -29,7 +29,7 @@ template "#{conf_root}/php.ini" do
   group  node['zen_apache']['alt_files_group'] if node['zen_apache']['alt_files_group']
   mode   node['zen_apache']['alt_files_mode']   if node['zen_apache']['alt_files_mode']
 
-  variables ({
+  variables({
     :max_exec_time         => node['zen_apache']['php']['max_exec_time'],
     :max_input_time        => node['zen_apache']['php']['max_input_time'],
     :display_errors        => node['zen_apache']['php']['display_errors'],
@@ -53,12 +53,12 @@ end
 
 execute "Backing up default php.ini" do
   command "mv #{default_php_ini} #{default_php_ini}.dist"
-  not_if { File.exists?("#{default_php_ini}.dist") }
+  not_if { File.exist?("#{default_php_ini}.dist") }
 end
 
 
 # Symlink php.ini to NFS version:
 link default_php_ini do
   to zg_php_ini
-  only_if { File.exists?("#{default_php_ini}.dist") }
+  only_if { File.exist?("#{default_php_ini}.dist") }
 end
