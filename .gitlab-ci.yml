@@ -29,11 +29,16 @@ syntax_job:
     - chef
     - ruby
   script:
-    - docker run $DOCKER_VOLUMES -i "${DOCKER_IMG}" /bin/bash -l -c "knife node show `hostname`"
+    - knife node show `hostname`
+    - docker pull docker.thezengarden.net/chef-ci
     - docker run $DOCKER_VOLUMES -i "${DOCKER_IMG}" /bin/bash -l -c "cd ${CI_PROJECT_DIR} && git log -1"
     - docker run $DOCKER_VOLUMES -i "${DOCKER_IMG}" /bin/bash -l -c "ruby -v"
     - docker run $DOCKER_VOLUMES -i "${DOCKER_IMG}" /bin/bash -l -c "foodcritic -V"
     - docker run $DOCKER_VOLUMES -i "${DOCKER_IMG}" /bin/bash -l -c "rubocop -V"
     - docker run $DOCKER_VOLUMES -i "${DOCKER_IMG}" /bin/bash -l -c "rubocop -l ${CI_PROJECT_DIR}"
     - docker run $DOCKER_VOLUMES -i "${DOCKER_IMG}" /bin/bash -l -c "foodcritic -P -f any ${CI_PROJECT_DIR}"
-    - docker run $DOCKER_VOLUMES -i "${DOCKER_IMG}" /bin/bash -l -c "knife cookbook upload ${COOKBOOK_NAME}"
+    - knife cookbook upload $COOKBOOK_NAME
+
+
+after_script:
+  - /opt/bin/docker_clean.sh
