@@ -25,7 +25,7 @@ default_httpd_conf = node['zen_apache']['httpd']['default_conf']
 
 execute "Backing up default httpd.conf" do
   command "mv #{default_httpd_conf} #{default_httpd_conf}.dist"
-  not_if { File.exists?("#{default_httpd_conf}.dist") }
+  not_if { File.exist?("#{default_httpd_conf}.dist") }
 end
 
 
@@ -33,16 +33,16 @@ template "#{httpd_conf_root}/#{httpd_conf}" do
   source 'httpd-2.4.conf.erb'
   owner  node['zen_apache']['alt_files_owner'] if node['zen_apache']['alt_files_owner']
   group  node['zen_apache']['alt_files_group'] if node['zen_apache']['alt_files_group']
-  mode   node['zen_apache']['alt_files_mode']   if node['zen_apache']['alt_files_mode']
+  mode   node['zen_apache']['alt_files_mode']  if node['zen_apache']['alt_files_mode']
 
-  variables ({
-    :server_root =>  node['zen_apache']['httpd']['server_root'],
-    :user        =>  node['zen_apache']['httpd']['user'],
-    :group       =>  node['zen_apache']['httpd']['group'],
+  variables({
+    :server_root  =>  node['zen_apache']['httpd']['server_root'],
+    :user         =>  node['zen_apache']['httpd']['user'],
+    :group        =>  node['zen_apache']['httpd']['group'],
     :server_admin => node['zen_apache']['httpd']['server_admin'],
-    :http_listen =>  node['zen_apache']['httpd']['listen_port'],
-    :conf_path   =>  node['zen_apache']['httpd']['vhosts'],
-    :sitelist    =>  node['sitelist']
+    :http_listen  =>  node['zen_apache']['httpd']['listen_port'],
+    :conf_path    =>  node['zen_apache']['httpd']['vhosts'],
+    :sitelist     =>  node['sitelist']
   })
 
   notifies :restart, "service[httpd]", :delayed
@@ -52,7 +52,7 @@ end
 # Symlink Conf to NFS version:
 link default_httpd_conf do
   to "#{httpd_conf_root}/#{httpd_conf}"
-  only_if { File.exists?("#{default_httpd_conf}.dist") }
+  only_if { File.exist?("#{default_httpd_conf}.dist") }
 end
 
 
@@ -63,7 +63,7 @@ if ssl_certs.count > 0
     file "#{httpd_conf_root}/ssl/#{cert['id']}" do
     owner  node['zen_apache']['alt_files_owner'] if node['zen_apache']['alt_files_owner']
     group  node['zen_apache']['alt_files_group'] if node['zen_apache']['alt_files_group']
-    mode   node['zen_apache']['alt_files_mode']   if node['zen_apache']['alt_files_mode']
+    mode   node['zen_apache']['alt_files_mode']  if node['zen_apache']['alt_files_mode']
 
       # SSL CERT CONTENT
       if cert['data'].class == String
