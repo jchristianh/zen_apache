@@ -33,7 +33,7 @@ template "#{httpd_conf_root}/#{httpd_conf}" do
   source 'httpd-2.4.conf.erb'
   owner  node['zen_apache']['alt_files_owner'] if node['zen_apache']['alt_files_owner']
   group  node['zen_apache']['alt_files_group'] if node['zen_apache']['alt_files_group']
-  mode   node['zen_apache']['alt_files_mode']   if node['zen_apache']['alt_files_mode']
+  mode   node['zen_apache']['alt_files_mode']  if node['zen_apache']['alt_files_mode']
 
   variables ({
     :server_root =>  node['zen_apache']['httpd']['server_root'],
