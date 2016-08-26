@@ -30,7 +30,7 @@ end
 
 node['sitelist'].each do |sl|
   vh     = data_bag_item(node['zen_apache']['httpd']['vhost_data_bag'], sl)
-  mysite = vh['id'].sub(/_ssl$|_proxy$/, "")
+  mysite = vh['id'].sub(/_.*$/, "")
 
   log "\n\nCreating folders and config for #{mysite}"
 
