@@ -18,18 +18,39 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 
+# Install remi-release to such in php56/php7
+cookbook_file "#{node['rhel_base']['tmp']}/remi-release-7.rpm" do
+  source 'remi-release-7.rpm'
+  mode   '0644'
+  not_if "rpm -qa | grep 'remi-release'"
+end
+
+package "remi-release-7" do
+  source "#{node['rhel_base']['tmp']}/remi-release-7.rpm"
+  provider Chef::Provider::Package::Rpm
+  action :install
+  not_if "rpm -qa | grep 'remi-release'"
+end
+
+execute "removing-remi-release-7.rpm" do
+  command "rm -f #{node['rhel_base']['tmp']}/remi-release-7.rpm"
+  only_if { File.exist?("#{node['rhel_base']['tmp']}/remi-release-7.rpm") }
+end
+
+
 pkg_list = [
-    'httpd', 'php-pecl-igbinary', 'php-pecl-memcache', 'php-pecl-imagick',
-    'php-cli', 'php-gd', 'php-process', 'php-pear', 'php-pecl-memcached',
-    'php-pdo', 'php-xmlrpc', 'php-snmp', 'php-imap', 'php-common',
-    'php-mysql', 'php-xml', 'php-pecl-msgpack', 'php-mcrypt',
-    'php-pecl-geoip', 'php-mbstring', 'php', 'mod_perl', 'mod_ssl',
-    'iptables-services','mariadb','perl-XML-Parser'
+    'httpd', 'php-pecl-igbinary', 'php-pecl-memcache',
+    'php-pecl-imagick', 'php-cli', 'php-gd',
+    'php-process', 'php-pear', 'php-pecl-memcached',
+    'php-pdo', 'php-xmlrpc', 'php-snmp', 'php-imap',
+    'php-common', 'php-mysql', 'php-xml',
+    'php-pecl-msgpack', 'php-mcrypt', 'php-pecl-geoip',
+    'php-mbstring', 'php-pecl-redis', 'php', 'mod_perl',
+    'mod_ssl', 'iptables-services','mariadb','perl-XML-Parser'
 ]
 
 
-# Once all base packages have been updated, lets install
-# a base set of packages that should be on every node:
+# Install the required packages for each Apache based web node:
 pkg_list.each do |pkg|
   package pkg do
     action :install
