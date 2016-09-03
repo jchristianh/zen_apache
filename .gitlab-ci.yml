@@ -38,7 +38,3 @@ syntax_job:
     - docker run --rm $DOCKER_VOLUMES -i "${DOCKER_IMG}" /bin/bash -l -c "rubocop -l ${CI_PROJECT_DIR}"
     - docker run --rm $DOCKER_VOLUMES -i "${DOCKER_IMG}" /bin/bash -l -c "foodcritic -P -f any ${CI_PROJECT_DIR}"
     - knife cookbook upload $COOKBOOK_NAME
-
-
-after_script:
-  - /opt/bin/docker_clean.sh
