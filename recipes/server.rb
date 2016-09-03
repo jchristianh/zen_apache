@@ -19,33 +19,33 @@
 
 
 # Install remi-release to such in php56/php7
-cookbook_file "#{node['rhel_base']['tmp']}/remi-release-7.rpm" do
-  source 'remi-release-7.rpm'
-  mode   '0644'
-  not_if "rpm -qa | grep 'remi-release'"
-end
+#cookbook_file "#{node['rhel_base']['tmp']}/remi-release-7.rpm" do
+#  source 'remi-release-7.rpm'
+#  mode   '0644'
+#  not_if "rpm -qa | grep 'remi-release'"
+#end
 
-package "remi-release-7" do
-  source "#{node['rhel_base']['tmp']}/remi-release-7.rpm"
-  provider Chef::Provider::Package::Rpm
-  action :install
-  not_if "rpm -qa | grep 'remi-release'"
-end
+#package "remi-release-7" do
+#  source "#{node['rhel_base']['tmp']}/remi-release-7.rpm"
+#  provider Chef::Provider::Package::Rpm
+#  action :install
+#  not_if "rpm -qa | grep 'remi-release'"
+#end
 
-execute "removing-remi-release-7.rpm" do
-  command "rm -f #{node['rhel_base']['tmp']}/remi-release-7.rpm"
-  only_if { File.exist?("#{node['rhel_base']['tmp']}/remi-release-7.rpm") }
-end
+#execute "removing-remi-release-7.rpm" do
+#  command "rm -f #{node['rhel_base']['tmp']}/remi-release-7.rpm"
+#  only_if { File.exist?("#{node['rhel_base']['tmp']}/remi-release-7.rpm") }
+#end
 
 
 pkg_list = [
-    'httpd', 'php56-php-pecl-igbinary', 'php56-php-pecl-memcache',
-    'php56-php-pecl-imagick', 'php56-php-cli', 'php56-php-gd',
-    'php56-php-process', 'php56-php-pear', 'php56-php-pecl-memcached',
-    'php56-php-pdo', 'php56-php-xmlrpc', 'php56-php-snmp', 'php56-php-imap',
-    'php56-php-common', 'php56-php-mysql', 'php56-php-xml',
-    'php56-php-pecl-msgpack', 'php56-php-mcrypt', 'php56-php-pecl-geoip',
-    'php56-php-mbstring', 'php56-php-pecl-redis', 'php56', 'mod_perl',
+    'httpd', 'php-pecl-igbinary', 'php-pecl-memcache',
+    'php-pecl-imagick', 'php-cli', 'php-gd',
+    'php-process', 'php-pear', 'php-pecl-memcached',
+    'php-pdo', 'php-xmlrpc', 'php-snmp', 'php-imap',
+    'php-common', 'php-mysql', 'php-xml',
+    'php-pecl-msgpack', 'php-mcrypt', 'php-pecl-geoip',
+    'php-mbstring', 'php-pecl-redis', 'php56', 'mod_perl',
     'mod_ssl', 'iptables-services','mariadb','perl-XML-Parser'
 ]
 
