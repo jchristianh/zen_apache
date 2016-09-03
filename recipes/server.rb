@@ -19,23 +19,23 @@
 
 
 # Install remi-release to such in php56/php7
-#cookbook_file "#{node['rhel_base']['tmp']}/remi-release-7.rpm" do
-#  source 'remi-release-7.rpm'
-#  mode   '0644'
-#  not_if "rpm -qa | grep 'remi-release'"
-#end
+cookbook_file "#{node['rhel_base']['tmp']}/remi-release-7.rpm" do
+  source 'remi-release-7.rpm'
+  mode   '0644'
+  not_if "rpm -qa | grep 'remi-release'"
+end
 
-#package "remi-release-7" do
-#  source "#{node['rhel_base']['tmp']}/remi-release-7.rpm"
-#  provider Chef::Provider::Package::Rpm
-#  action :install
-#  not_if "rpm -qa | grep 'remi-release'"
-#end
+package "remi-release-7" do
+  source "#{node['rhel_base']['tmp']}/remi-release-7.rpm"
+  provider Chef::Provider::Package::Rpm
+  action :install
+  not_if "rpm -qa | grep 'remi-release'"
+end
 
-#execute "removing-remi-release-7.rpm" do
-#  command "rm -f #{node['rhel_base']['tmp']}/remi-release-7.rpm"
-#  only_if { File.exist?("#{node['rhel_base']['tmp']}/remi-release-7.rpm") }
-#end
+execute "removing-remi-release-7.rpm" do
+  command "rm -f #{node['rhel_base']['tmp']}/remi-release-7.rpm"
+  only_if { File.exist?("#{node['rhel_base']['tmp']}/remi-release-7.rpm") }
+end
 
 
 pkg_list = [
