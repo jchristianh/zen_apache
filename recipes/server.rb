@@ -45,7 +45,7 @@ pkg_list = [
     'php-pdo', 'php-xmlrpc', 'php-snmp', 'php-imap',
     'php-common', 'php-mysql', 'php-xml',
     'php-pecl-msgpack', 'php-mcrypt', 'php-pecl-geoip',
-    'php-mbstring', 'php-pecl-redis', 'php56', 'mod_perl',
+    'php-mbstring', 'php-pecl-redis', 'php', 'mod_perl',
     'mod_ssl', 'iptables-services','mariadb','perl-XML-Parser'
 ]
 
