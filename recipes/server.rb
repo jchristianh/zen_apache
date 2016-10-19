@@ -40,7 +40,7 @@ end
 
 # if node should be running php7, lets enable it:
 if node['apache_conf']['use_ver_7']
-  execute 'enabling-remi-repos'
+  execute 'enabling-remi-repos' do
     command 'yum-config-manager --enable remi remi-php70'
     not_if 'grep enabled=1 /etc/yum.repos.d/remi-php70.repo'
   end
