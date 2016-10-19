@@ -38,6 +38,13 @@ execute "removing-remi-release-7.rpm" do
 end
 
 
+# if node should be running php7, lets enable it:
+if node['apache_conf']['use_ver_7'] do
+  command 'yum-config-manager --enable remi remi-php70'
+  not_if 'grep enabled=1 /etc/yum.repos.d/remi-php70.repo'
+end
+
+
 pkg_list = [
     'httpd', 'php-pecl-igbinary', 'php-pecl-memcache',
     'php-pecl-imagick', 'php-cli', 'php-gd',
