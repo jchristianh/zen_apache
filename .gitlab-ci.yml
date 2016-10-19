@@ -28,6 +28,8 @@ syntax_job:
   tags:
     - chef
     - ruby
+  only:
+    - development
   script:
     - knife node show `hostname`
     - docker pull docker.thezengarden.net/chef-ci
