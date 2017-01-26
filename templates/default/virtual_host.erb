@@ -34,6 +34,12 @@
   <% if @site['ssl']['SSLCertificateChainFile'] %>
   SSLCertificateChainFile <%= @site['ssl']['SSLCertificateChainFile'] %>
   <% end %>
+  <% if @site['ssl']['SSLProtocol'] %>
+  SSLProtocol <%= @site['ssl']['SSLProtocol'] %>
+  <% end %>
+  <% if @site['ssl']['SSLCipherSuite'] %>
+  SSLCipherSuite <%= @site['ssl']['SSLCipherSuite'] %>
+  <% end %>
 <% end %>
 
 <% if @proxyreqs %>
