@@ -19,16 +19,16 @@
 
 
 # HTTPD OPTIONS
-default['zen_apache']['httpd']['server_root']    = "/etc/httpd"
-default['zen_apache']['httpd']['user']           = "apache"
-default['zen_apache']['httpd']['group']          = "apache"
-default['zen_apache']['httpd']['server_admin']   = "chris@thezengarden.net"
-default['zen_apache']['httpd']['listen_port']    = "80"
-default['zen_apache']['httpd']['root']           = "/www"
-default['zen_apache']['httpd']['conf_root']      = node['zen_apache']['httpd']['root'] + "/conf"
-default['zen_apache']['httpd']['cert_path']      = node['zen_apache']['httpd']['conf_root'] + "/ssl"
-default['zen_apache']['httpd']['vhosts']         = node['zen_apache']['httpd']['conf_root'] + "/vhosts"
-default['zen_apache']['httpd']['sites']          = node['zen_apache']['httpd']['root'] + "/sites"
-default['zen_apache']['httpd']['httpd_conf']     = "httpd.conf"
-default['zen_apache']['httpd']['default_conf']   = "/etc/httpd/conf/httpd.conf"
-default['zen_apache']['httpd']['vhost_data_bag'] = "virtual_hosts"
+default['zen_apache']['httpd']['server_root']    = '/etc/httpd'
+default['zen_apache']['httpd']['user']           = 'apache'
+default['zen_apache']['httpd']['group']          = 'apache'
+default['zen_apache']['httpd']['server_admin']   = 'chris@thezengarden.net'
+default['zen_apache']['httpd']['listen_port']    = '80'
+default['zen_apache']['httpd']['root']           = '/www'
+default['zen_apache']['httpd']['conf_root']      = node['zen_apache']['httpd']['root'] + '/conf'
+default['zen_apache']['httpd']['cert_path']      = node['zen_apache']['httpd']['conf_root'] + '/ssl'
+default['zen_apache']['httpd']['vhosts']         = node['zen_apache']['httpd']['conf_root'] + '/vhosts'
+default['zen_apache']['httpd']['sites']          = node['zen_apache']['httpd']['root'] + '/sites'
+default['zen_apache']['httpd']['httpd_conf']     = 'httpd.conf'
+default['zen_apache']['httpd']['default_conf']   = '/etc/httpd/conf/httpd.conf'
+default['zen_apache']['httpd']['vhost_data_bag'] = 'virtual_hosts'

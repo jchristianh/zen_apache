@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: zen_apache
-# Attributes:: default
+# Attributes:: ssl
 #
 # Copyright (C) 2015 Chris Hammer <chris@thezengarden.net>
 #
@@ -18,11 +18,6 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 
-# GENERAL OPTIONS
-default['zen_apache']['alt_files_owner'] = 'chris'
-default['zen_apache']['alt_files_group'] = 'chris'
-default['zen_apache']['alt_files_mode']  = '0644'
-default['zen_apache']['alt_dirs_mode']   = '0755'
-
-default['zen_apache']['do_sites_symlink']     = true
-default['zen_apache']['sites_symlink_target'] = '/virtual'
+# SSL OPTIONS
+default['zen_apache']['ssl']['protocols'] = '+TLSv1.2'
+default['zen_apache']['ssl']['ciphers']   = 'EECDH+AESGCM:EDH+AESGCM'
