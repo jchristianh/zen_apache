@@ -74,7 +74,9 @@ node['sitelist'].each do |sl|
       :site          => vh['site'],
       :proxyreqs     => vh['site']['proxyreqs'],
       :proxy         => vh['site']['proxy'],
-      :modsec_opts   => vh['site']['modsecopts']
+      :modsec_opts   => vh['site']['modsecopts'],
+      :ssl_protocols => node['zen_apache']['ssl']['protocols'],
+      :ssl_ciphers   => node['zen_apache']['ssl']['ciphers']
     })
 
     notifies :restart, "service[httpd]", :delayed

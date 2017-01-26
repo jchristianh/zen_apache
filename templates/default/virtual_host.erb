@@ -26,19 +26,16 @@
 
 <% if @site['ssl'] && @site['ssl']['SSLEngine'] == "On" %>
   SSLEngine <%= @site['ssl']['SSLEngine'] %>
+  SSLProtocol <%= @ssl_protocols %>
+  SSLCipherSuite <%= @ssl_ciphers %>
   <% if @proxyreqs %>
   SSLProxyEngine on
   <% end %>
+
   SSLCertificateFile <%= @site['ssl']['SSLCertificateFile'] %>
   SSLCertificateKeyFile <%= @site['ssl']['SSLCertificateKeyFile'] %>
   <% if @site['ssl']['SSLCertificateChainFile'] %>
   SSLCertificateChainFile <%= @site['ssl']['SSLCertificateChainFile'] %>
-  <% end %>
-  <% if @site['ssl']['SSLProtocol'] %>
-  SSLProtocol <%= @site['ssl']['SSLProtocol'] %>
-  <% end %>
-  <% if @site['ssl']['SSLCipherSuite'] %>
-  SSLCipherSuite <%= @site['ssl']['SSLCipherSuite'] %>
   <% end %>
 <% end %>
 
