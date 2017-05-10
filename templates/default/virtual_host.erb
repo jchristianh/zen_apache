@@ -82,13 +82,15 @@
 <% if @site['directories'] %>
 <% @site['directories'].each do |k,v| %>
   <Directory "<%= k %>">
-  <% if v.class == Hash %>
+    ### args:
+    ### <%= v %>
+  <% if v.class == Hash || v.class == Mash %>
     <% v.each do |kk,vv| %>
       <% if vv.class == Array %>
         <% vv.each_with_index do |val,idx| %>
     <%= kk %> <%= val %>
         <% end %>
-      <% elsif v.class == Hash %>
+      <% else %>
     <%= kk %> <%= vv %>
       <% end %>
     <% end %>
