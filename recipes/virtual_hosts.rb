@@ -74,6 +74,8 @@ node['sitelist'].each do |sl|
       :site          => vh['site'],
       :proxyreqs     => vh['site']['proxyreqs'],
       :proxy         => vh['site']['proxy'],
+      :redirectreqs  => vh['site']['redirectreqs'],
+      :redirect      => vh['site']['redirect'],
       :modsec_opts   => vh['site']['modsecopts'],
       :ssl_protocols => node['zen_apache']['ssl']['protocols'],
       :ssl_ciphers   => node['zen_apache']['ssl']['ciphers']
