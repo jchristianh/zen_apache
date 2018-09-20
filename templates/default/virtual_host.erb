@@ -54,6 +54,10 @@
   ScriptAlias /cgi-bin <%= @doc_root %>/cgi-bin
 <% end %>
 
+<% if @redirectreqs %>
+  Redirect <%= @redirect['type'] %> <%= @redirect['src'] %> <%= @redirect['dest'] %>
+<% end %>
+
 <% if @site['server_status'] %>
   <Location /server-status>
     SetHandler server-status
