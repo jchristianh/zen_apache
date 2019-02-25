@@ -48,7 +48,7 @@ if node['apache_conf']['php']['use_ver_7']
 
   execute 'disabling-remi-repo-70' do
     command 'yum-config-manager --disable remi-php70'
-    not_if 'grep enabled=0 /etc/yum.repos.d/remi-php70.repo'
+    only_if 'grep enabled=1 /etc/yum.repos.d/remi-php70.repo'
   end
 end
 
