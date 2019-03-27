@@ -2,7 +2,7 @@
 # Cookbook Name:: zen_apache
 # Recipe:: server
 #
-# Copyright (C) 2015 Chris Hammer <chris@thezengarden.net>
+# Copyright (C) 2019 Chris Hammer <chris@thezengarden.net>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -20,6 +20,14 @@
 
 # if node should be running php7, lets install/enable it:
 if node['apache_conf']['php']['use_ver_7']
+  
+  seven_ver = [
+    'php54',
+    'php70',
+    'php71',
+    'php72',
+    'php73'
+  ]
 
   # Install remi-release to suck in php56/php7
   cookbook_file "#{node['rhel_base']['tmp']}/remi-release-7.rpm" do
@@ -28,9 +36,8 @@ if node['apache_conf']['php']['use_ver_7']
     not_if "rpm -qa | grep 'remi-release'"
   end
 
-  package "remi-release-7" do
+  rpm_package "remi-release-7" do
     source "#{node['rhel_base']['tmp']}/remi-release-7.rpm"
-    provider Chef::Provider::Package::Rpm
     action :install
     not_if "rpm -qa | grep 'remi-release'"
   end
@@ -41,16 +48,36 @@ if node['apache_conf']['php']['use_ver_7']
   end
 
 
-  execute 'enabling-remi-repos' do
-    command 'yum-config-manager --enable remi remi-php70'
-    not_if 'grep enabled=1 /etc/yum.repos.d/remi-php70.repo'
-  end
+#################################################################
 
-  execute 'disabling-remi-repo-72' do
-    command 'yum-config-manager --disable remi-php72'
-    only_if 'grep enabled=1 /etc/yum.repos.d/remi-php70.repo'
+
+  # if nodes version is NOT set, default to php 7.0...
+  if !defined(node['apache_conf']['php']['7_ver'])
+    execute 'enabling-remi-repo-70' do
+      command 'yum-config-manager --enable remi-php70'
+      not_if "grep enabled=1 /etc/yum.repos.d/remi-php70.repo"
+    end
+  else
+    seven_ver.each do |sv|
+      # we'll use this to set versions 7.1, 7.2, or 7.3 based on need...
+      if node['apache_conf']['php']['7_ver'] == sv
+        execute "enabling-repo-remi-#{sv}" do
+          command "yum-config-manager --enable remi remi-#{sv}"
+          not_if "grep enabled=1 /etc/yum.repos.d/remi-#{sv}.repo"
+        end
+      # if we're one of the unchosen versions, disable the repo:
+      else
+        execute "disabling-repo-remi-#{sv}" do
+          command "yum-config-manager --disable remi-#{sv}"
+          only_if "grep enabled=1 /etc/yum.repos.d/remi-#{sv}.repo"
+        end
+      end
+    end
   end
 end
+
+
+#################################################################
 
 
 pkg_list = [
