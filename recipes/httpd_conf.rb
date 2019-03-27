@@ -2,7 +2,7 @@
 # Cookbook Name:: zen_apache
 # Recipe:: httpd_conf
 #
-# Copyright (C) 2015 Chris Hammer <chris@thezengarden.net>
+# Copyright (C) 2019 Chris Hammer <chris@thezengarden.net>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
