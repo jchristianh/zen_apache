@@ -8,4 +8,4 @@ version          '1.3.40'
 issues_url       'http://www.thezengarden.net'
 source_url       'http://www.thezengarden.net'
 chef_version     '>= 12.5' if respond_to?(:chef_version)
-supports         'centos', '>= 7'
+supports         'centos', '>= 7.0'
