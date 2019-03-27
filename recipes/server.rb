@@ -20,15 +20,6 @@
 
 # if node should be running php7, lets install/enable it:
 if node['apache_conf']['php']['use_ver_7']
-  
-  seven_ver = [
-    'php54',
-    'php70',
-    'php71',
-    'php72',
-    'php73'
-  ]
-
   # Install remi-release to suck in php56/php7
   cookbook_file "#{node['rhel_base']['tmp']}/remi-release-7.rpm" do
     source 'remi-release-7.rpm'
@@ -49,15 +40,19 @@ if node['apache_conf']['php']['use_ver_7']
 
 
 #################################################################
+# We need to decide which dot release of 7 to deploy:           #
+#################################################################
 
-
-  # if nodes version is NOT set, default to php 7.0...
-  if !defined(node['apache_conf']['php']['7_ver'])
-    execute 'enabling-remi-repo-70' do
-      command 'yum-config-manager --enable remi-php70'
-      not_if "grep enabled=1 /etc/yum.repos.d/remi-php70.repo"
-    end
-  else
+  if node['apache_conf']['php']['7_ver']
+  
+    seven_ver = [
+      'php54',
+      'php70',
+      'php71',
+      'php72',
+      'php73'
+    ]
+  
     seven_ver.each do |sv|
       # we'll use this to set versions 7.1, 7.2, or 7.3 based on need...
       if node['apache_conf']['php']['7_ver'] == sv
@@ -72,6 +67,12 @@ if node['apache_conf']['php']['use_ver_7']
           only_if "grep enabled=1 /etc/yum.repos.d/remi-#{sv}.repo"
         end
       end
+    end
+  else
+  # if nodes version is NOT set, default to php 7.0...
+    execute 'enabling-remi-repo-70' do
+      command 'yum-config-manager --enable remi-php70'
+      not_if "grep enabled=1 /etc/yum.repos.d/remi-php70.repo"
     end
   end
 end
