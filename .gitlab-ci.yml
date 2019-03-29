@@ -17,6 +17,7 @@ variables:
   DOCKER_VOLUMES:   "-v /opt/docker_private/.ssh:/root/.ssh -v /opt/docker_private/.chef:/root/.chef -v ${CI_PROJECT_DIR}:${CI_PROJECT_DIR}"
   COOKBOOK_NAME:    "zen_apache"
   DOCKER_IMG:       "docker.thezengarden.net/zen-ci"
+  RUBY_PATH:        "/usr/local/rvm/gems/ruby-2.6.0/bin"
 
 
 stages:
@@ -32,10 +33,10 @@ syntax_job:
     - development
   script:
     - "cd ${CI_PROJECT_DIR} && git log -1"
-    - ruby -v
-    - foodcritic -V
-    - rubocop -V
-    - rubocop -l ${CI_PROJECT_DIR}
-    - foodcritic -P -f any ${CI_PROJECT_DIR}
+    - ${RUBY_PATH}/ruby -v
+    - ${RUBY_PATH}/foodcritic -V
+    - ${RUBY_PATH}/rubocop -V
+    - ${RUBY_PATH}/rubocop -l ${CI_PROJECT_DIR}
+    - ${RUBY_PATH}/foodcritic -P -f any ${CI_PROJECT_DIR}
   # we will need to get docker ci working in a manner which once again allows this:
   # - knife cookbook upload $COOKBOOK_NAME
