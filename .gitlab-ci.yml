@@ -33,10 +33,10 @@ syntax_job:
     - development
   script:
     - "cd ${CI_PROJECT_DIR} && git log -1"
-    - ${RUBY_PATH}/ruby -v
-    - ${RUBY_PATH}/foodcritic -V
-    - ${RUBY_PATH}/rubocop -V
-    - ${RUBY_PATH}/rubocop -l ${CI_PROJECT_DIR}
-    - ${RUBY_PATH}/foodcritic -P -f any ${CI_PROJECT_DIR}
+    - "${RUBY_PATH}/ruby -v"
+    - "${RUBY_PATH}/foodcritic -V"
+    - "${RUBY_PATH}/rubocop -V"
+    - "${RUBY_PATH}/rubocop -l ${CI_PROJECT_DIR}"
+    - "${RUBY_PATH}/foodcritic -P -f any ${CI_PROJECT_DIR}"
   # we will need to get docker ci working in a manner which once again allows this:
   # - knife cookbook upload $COOKBOOK_NAME
