@@ -31,6 +31,16 @@ web_dirs = [
 ]
 
 
+# link is made by default via vdm_client so
+# that /www is a common theme. if we are a standalone
+# web node, we can simply remove the link so that
+# all configs created are on local storage
+link node['zen_apache']['httpd']['root'] do
+  action :delete
+  only_if { node['zen_apache']['use_shared_storage'] == false }
+end
+
+
 # CREATE conf/ and conf/vhosts to hold configs
 web_dirs.each do |dir|
   directory dir do

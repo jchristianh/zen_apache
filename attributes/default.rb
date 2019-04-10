@@ -24,5 +24,8 @@ default['zen_apache']['alt_files_group'] = 'chris'
 default['zen_apache']['alt_files_mode']  = '0644'
 default['zen_apache']['alt_dirs_mode']   = '0755'
 
+default['zen_apache']['use_shared_storage']   = true
+default['zen_apache']['shared_storage_mount'] = '/vdm/1'
+
 default['zen_apache']['do_sites_symlink']     = true
 default['zen_apache']['sites_symlink_target'] = '/virtual'
